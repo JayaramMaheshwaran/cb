@@ -121,15 +121,18 @@ for message in st.session_state.chat_session.history:
     with st.chat_message(translate_role_for_streamlit(message.role)):
         st.markdown(message.parts[0].text)
 
-# Input field for user's message
-user_prompt = st.chat_input("Ask Jayaram...")
-if user_prompt:
-    # Add user's message to chat and display it
-    st.chat_message("user").markdown(user_prompt)
+#
+    # Input field for user's message
+    user_prompt = st.text_input("Ask Jayaram...")
 
-    # Send user's message to Gemini-Pro and get the response
-    gemini_response = st.session_state.chat_session.send_message(user_prompt)
+    if user_prompt:
+        # Add user's message to chat and display it
+        st.markdown(f'<div class="chat-user">{user_prompt}</div>', unsafe_allow_html=True)
 
-    # Display Gemini-Pro's response
-    with st.chat_message("assistant"):
-        st.markdown(gemini_response.text)
+        # Send user's message to Gemini-Pro and get the response
+        gemini_response = st.session_state.chat_session.send_message(user_prompt)
+
+        # Display Gemini-Pro's response
+        with st.chat_message("assistant"):
+            st.markdown(f'<div class="chat-assistant">{gemini_response.text}</div>', unsafe_allow_html=True)
+
