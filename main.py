@@ -1,12 +1,11 @@
 import os
-
 import streamlit as st
 from dotenv import load_dotenv
 import google.generativeai as gen_ai
 
-
 # Load environment variables
 load_dotenv()
+
 # Configure Streamlit page settings
 st.set_page_config(
     page_title="Chat with Jayaram!",
@@ -35,6 +34,8 @@ st.markdown(
         margin: 10px 0;
         font-weight: bold;
         border: 2px solid #ffa726;
+        width: 60%;  /* Adjust width for chat bubbles */
+        word-wrap: break-word;
     }
 
     /* Chat bubble styling for assistant */
@@ -45,6 +46,8 @@ st.markdown(
         border-radius: 10px;
         margin: 10px 0;
         border: 2px solid #64b5f6;
+        width: 60%;
+        word-wrap: break-word;
     }
 
     /* Font customization */
@@ -61,7 +64,7 @@ st.markdown(
     }
 
     /* Sidebar styling */
-    .sidebar .stSidebar {
+    .stSidebar {
         background-color: #1e1e1e;  /* Dark gray background for sidebar */
         padding: 20px;
         color: white;
@@ -71,6 +74,7 @@ st.markdown(
     .stTextInput input {
         background-color: #333333; /* Dark background for input */
         color: white;
+        width: 100%; /* Ensure input takes full width */
     }
 
     </style>
@@ -118,7 +122,7 @@ for message in st.session_state.chat_session.history:
         st.markdown(message.parts[0].text)
 
 # Input field for user's message
-user_prompt = st.chat_input("Ask Gemini-Pro...")
+user_prompt = st.chat_input("Ask Jayaram...")
 if user_prompt:
     # Add user's message to chat and display it
     st.chat_message("user").markdown(user_prompt)
