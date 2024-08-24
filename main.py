@@ -70,12 +70,16 @@ st.markdown(
         color: white;
     }
 
-    /* Chat input field */
-    .stTextInput input {
-        background-color: #333333; /* Dark background for input */
-        color: white;
-        width: 100%; /* Ensure input takes full width */
-    }
+   /* Chat input field */
+.stTextInput input {
+    background-color: #333333; /* Dark background for input */
+    color: white;
+    width: calc(100% - 20px); /* Full width minus padding */
+    height: 40px; /* Adjust height as needed */
+    padding: 10px; /* Padding inside the input */
+    border-radius: 5px; /* Rounded corners */
+    border: 1px solid #444444; /* Optional border color */
+}
 
     </style>
     """,
