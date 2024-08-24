@@ -18,12 +18,7 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    /* Full black background for the entire window */
-    .stApp {
-        background-color: black;
-        color: white;
-        font-family: "Segoe UI", sans-serif;
-    }
+   
 
     /* Chat bubble styling for user */
     .chat-user {
@@ -69,17 +64,6 @@ st.markdown(
         padding: 20px;
         color: white;
     }
-
-   /* Chat input field */
-.stTextInput input {
-    background-color: #333333; /* Dark background for input */
-    color: white;
-    width: calc(100% - 20px); /* Full width minus padding */
-    height: 40px; /* Adjust height as needed */
-    padding: 10px; /* Padding inside the input */
-    border-radius: 5px; /* Rounded corners */
-    border: 1px solid #444444; /* Optional border color */
-}
 
     </style>
     """,
