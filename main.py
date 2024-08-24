@@ -116,11 +116,14 @@ if "chat_session" not in st.session_state:
 # Display the chatbot's title on the page
 st.title("🤖 Jayaram's - ChatBot")
 
-# Display the chat history
-for message in st.session_state.chat_session.history:
-    with st.chat_message(translate_role_for_streamlit(message.role)):
-        st.markdown(message.parts[0].text)
-
+ # Display the chat history with enhanced styling
+    for message in st.session_state.chat_session.history:
+        role = translate_role_for_streamlit(message.role)
+        chat_class = "chat-user" if role == "user" else "chat-assistant"
+        st.markdown(
+            f'<div class="{chat_class}">{message.parts[0].text}</div>',
+            unsafe_allow_html=True
+        )
 #
     # Input field for user's message
     user_prompt = st.text_input("Ask Jayaram...")
