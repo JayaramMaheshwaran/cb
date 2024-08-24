@@ -3,6 +3,9 @@ import streamlit as st
 from dotenv import load_dotenv
 import google.generativeai as gen_ai  # Corrected import (alias)
 
+# Load environment variables
+load_dotenv()
+
 # Configure Streamlit page settings (must be the first Streamlit command)
 st.set_page_config(
     page_title="Chat with Jayaram!",
@@ -11,12 +14,6 @@ st.set_page_config(
     initial_sidebar_state="expanded",  # Sidebar is expanded by default
 )
 
-# Specify the path to your .env file
-dotenv_path = os.path.join(os.getcwd(), '.env')
-load_dotenv(dotenv_path)
-
-# Test if .env is loaded and print the path
-st.write(f"Loading .env from: {dotenv_path}")
 
 # Apply custom CSS for full black window styling
 st.markdown(
