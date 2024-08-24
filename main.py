@@ -1,7 +1,9 @@
 import os
+
 import streamlit as st
 from dotenv import load_dotenv
 import google.generativeai as gen_ai
+
 
 # Load environment variables
 load_dotenv()
@@ -13,63 +15,6 @@ st.set_page_config(
     layout="wide",   # Page layout option
     initial_sidebar_state="expanded",  # Sidebar is expanded by default
 )
-
-# Apply custom CSS for full black window styling
-st.markdown(
-    """
-    <style>
-   
-
-    /* Chat bubble styling for user */
-    .chat-user {
-        background-color: #1e1e1e;  /* Dark gray for user chat bubble */
-        color: white;
-        padding: 10px;
-        border-radius: 10px;
-        margin: 10px 0;
-        font-weight: bold;
-        border: 2px solid #ffa726;
-        width: 60%;  /* Adjust width for chat bubbles */
-        word-wrap: break-word;
-    }
-
-    /* Chat bubble styling for assistant */
-    .chat-assistant {
-        background-color: #333333;  /* Slightly lighter dark gray for assistant chat bubble */
-        color: white;
-        padding: 10px;
-        border-radius: 10px;
-        margin: 10px 0;
-        border: 2px solid #64b5f6;
-        width: 60%;
-        word-wrap: break-word;
-    }
-
-    /* Font customization */
-    h1, h2, h3, h4, h5, h6 {
-        font-family: 'Segoe UI', sans-serif;
-        font-weight: 600;
-        color: white;
-    }
-
-    .stTextInput label {
-        font-size: 1.2em;
-        font-weight: bold;
-        color: white;
-    }
-
-    /* Sidebar styling */
-    .stSidebar {
-        background-color: #1e1e1e;  /* Dark gray background for sidebar */
-        padding: 20px;
-        color: white;
-    }
-
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
 # Sidebar content for branding and app info
 with st.sidebar:
     st.title("💬 Jayaram's ChatBot")
@@ -79,7 +24,6 @@ with st.sidebar:
         - **AI Model**: Google Gemini-Pro
         - **Developer**: Jayaram
         """)
-    
 
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
@@ -110,7 +54,7 @@ for message in st.session_state.chat_session.history:
         st.markdown(message.parts[0].text)
 
 # Input field for user's message
-user_prompt = st.chat_input("Ask Jayaram...")
+user_prompt = st.chat_input("Ask question...")
 if user_prompt:
     # Add user's message to chat and display it
     st.chat_message("user").markdown(user_prompt)
