@@ -1,22 +1,19 @@
 import os
+
 import streamlit as st
 from dotenv import load_dotenv
-import google.generativeai as gen_ai  # Corrected import (alias)
+import google.generativeai as gen_ai
 
-# Configure Streamlit page settings (must be the first Streamlit command)
+
+# Load environment variables
+load_dotenv()
+# Configure Streamlit page settings
 st.set_page_config(
     page_title="Chat with Jayaram!",
     page_icon="🧊",  # Favicon emoji
     layout="wide",   # Page layout option
     initial_sidebar_state="expanded",  # Sidebar is expanded by default
 )
-
-# Specify the path to your .env file
-dotenv_path = os.path.join(os.getcwd(), '.env')
-load_dotenv(dotenv_path)
-
-# Test if .env is loaded and print the path
-st.write(f"Loading .env from: {dotenv_path}")
 
 # Apply custom CSS for full black window styling
 st.markdown(
@@ -92,51 +89,44 @@ with st.sidebar:
         """)
     st.image(r"C:\Users\Admin\OneDrive\Pictures\jayaram\IMG_20240707_181617.jpg", use_column_width=True)
 
-# Get Google API key from environment variables
+
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
-# Ensure the API key is available
-if GOOGLE_API_KEY is None:
-    st.error("Google API Key is not set in the environment variables.")
-else:
-    # Set up Google Gemini-Pro AI model
-    gen_ai.configure(api_key=GOOGLE_API_KEY)
+# Set up Google Gemini-Pro AI model
+gen_ai.configure(api_key=GOOGLE_API_KEY)
+model = gen_ai.GenerativeModel('gemini-pro')
 
-    # Assuming this is the correct way to initialize the model
-    model = gen_ai.GenerativeModel('gemini-pro')
 
-    # Function to translate roles between Gemini-Pro and Streamlit terminology
-    def translate_role_for_streamlit(user_role):
-        if user_role == "model":
-            return "assistant"
-        else:
-            return user_role
+# Function to translate roles between Gemini-Pro and Streamlit terminology
+def translate_role_for_streamlit(user_role):
+    if user_role == "model":
+        return "assistant"
+    else:
+        return user_role
 
-    # Initialize chat session in Streamlit if not already present
-    if "chat_session" not in st.session_state:
-        st.session_state.chat_session = model.start_chat(history=[])
 
-    # Display the chatbot's title on the page
-    st.title("🤖 Jayaram's - ChatBot")
+# Initialize chat session in Streamlit if not already present
+if "chat_session" not in st.session_state:
+    st.session_state.chat_session = model.start_chat(history=[])
 
-    # Display the chat history with enhanced styling
-    for message in st.session_state.chat_session.history:
-        role = translate_role_for_streamlit(message.role)
-        chat_class = "chat-user" if role == "user" else "chat-assistant"
-        st.markdown(
-            f'<div class="{chat_class}">{message.parts[0].text}</div>',
-            unsafe_allow_html=True
-        )
 
-    # Input field for user's message
-    user_prompt = st.text_input("Ask Jayaram...")
+# Display the chatbot's title on the page
+st.title("🤖 Gemini Pro - ChatBot")
 
-    if user_prompt:
-        # Add user's message to chat and display it
-        st.markdown(f'<div class="chat-user">{user_prompt}</div>', unsafe_allow_html=True)
+# Display the chat history
+for message in st.session_state.chat_session.history:
+    with st.chat_message(translate_role_for_streamlit(message.role)):
+        st.markdown(message.parts[0].text)
 
-        # Send user's message to Gemini-Pro and get the response
-        gemini_response = st.session_state.chat_session.send_message(user_prompt)
+# Input field for user's message
+user_prompt = st.chat_input("Ask Gemini-Pro...")
+if user_prompt:
+    # Add user's message to chat and display it
+    st.chat_message("user").markdown(user_prompt)
 
-        # Display Gemini-Pro's response
-        st.markdown(f'<div class="chat-assistant">{gemini_response.text}</div>', unsafe_allow_html=True)
+    # Send user's message to Gemini-Pro and get the response
+    gemini_response = st.session_state.chat_session.send_message(user_prompt)
+
+    # Display Gemini-Pro's response
+    with st.chat_message("assistant"):
+        st.markdown(gemini_response.text)
