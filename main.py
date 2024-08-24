@@ -24,7 +24,7 @@ with st.sidebar:
         - **Developer**: Jayaram
         """)
 
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+GOOGLE_API_KEY = 'AIzaSyBFil7kyMvheGHVhU5-YNTmQnLd_MJueXI'
 
 if not GOOGLE_API_KEY:
     st.error("Google API key is missing. Please check your .env file.")
