@@ -87,8 +87,7 @@ with st.sidebar:
         - **AI Model**: Google Gemini-Pro
         - **Developer**: Jayaram
         """)
-    st.image(r"C:\Users\Admin\OneDrive\Pictures\jayaram\IMG_20240707_181617.jpg", use_column_width=True)
-
+    
 
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
