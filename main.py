@@ -7,6 +7,9 @@ import google.generativeai as gen_ai  # Corrected import (alias)
 dotenv_path = os.path.join(os.getcwd(), '.env')
 load_dotenv(dotenv_path)
 
+# Test if .env is loaded and print the path
+st.write(f"Loading .env from: {dotenv_path}")
+
 # Configure Streamlit page settings
 st.set_page_config(
     page_title="Chat with Jayaram!",
@@ -102,14 +105,12 @@ else:
     # Assuming this is the correct way to initialize the model
     model = gen_ai.GenerativeModel('gemini-pro')
 
-
     # Function to translate roles between Gemini-Pro and Streamlit terminology
     def translate_role_for_streamlit(user_role):
         if user_role == "model":
             return "assistant"
         else:
             return user_role
-
 
     # Initialize chat session in Streamlit if not already present
     if "chat_session" not in st.session_state:
@@ -138,5 +139,4 @@ else:
         gemini_response = st.session_state.chat_session.send_message(user_prompt)
 
         # Display Gemini-Pro's response
-        with st.chat_message("assistant"):
-            st.markdown(f'<div class="chat-assistant">{gemini_response.text}</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="chat-assistant">{gemini_response.text}</div>', unsafe_allow_html=True)
